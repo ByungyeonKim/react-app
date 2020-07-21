@@ -9,9 +9,21 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <Subject></Subject>
+        <Subject
+          title='이게 props의 title'
+          sub='이게 props의 sub'
+          content='jsx의 props는 html의 attribute와 같다'
+        ></Subject>
+        <Subject
+          title='React'
+          sub='효율성의 끝판왕'
+          content='이것이 리액트인가..👨‍💻'
+        ></Subject>
         <Navigation></Navigation>
-        <Article></Article>
+        <Article
+          title='HTML(props)'
+          desc='HTML is HyperText Markup Language.'
+        ></Article>
       </div>
     );
   }
@@ -24,8 +36,12 @@ class Subject extends Component {
       //Component를 만들때는 반드시 하나의 최상위 태그로 시작해야한다.
       //여기선 header가 최상위 태그
       <header>
-        <h1>Web</h1>
-        world wide web!
+        {/* <h1>Web</h1>
+        world wide web! */}
+        {/* 리팩토링! */}
+        <h1>{this.props.title}</h1>
+        <h2>{this.props.sub}</h2>
+        {this.props.content}
       </header>
     );
   }
@@ -55,8 +71,8 @@ class Article extends Component {
   render() {
     return (
       <article>
-        <h2>HTML</h2>
-        HTML is HyperText Markup Language.
+        <h2>{this.props.title}</h2>
+        {this.props.desc}
       </article>
     );
   }
