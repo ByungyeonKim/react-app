@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Subject from './components/Subject';
+import Navigation from './components/Navigation';
+import Article from './components/Article';
 import './App.css';
 
 //여기서 컴포넌트를 생성한다.
@@ -25,55 +28,6 @@ class App extends Component {
           desc='HTML is HyperText Markup Language.'
         ></Article>
       </div>
-    );
-  }
-}
-
-class Subject extends Component {
-  //class 안에 소속되어 있다면 함수 앞에 function을 쓰지 않아도 된다.
-  render() {
-    return (
-      //Component를 만들때는 반드시 하나의 최상위 태그로 시작해야한다.
-      //여기선 header가 최상위 태그
-      <header>
-        {/* <h1>Web</h1>
-        world wide web! */}
-        {/* 리팩토링! */}
-        <h1>{this.props.title}</h1>
-        <h2>{this.props.sub}</h2>
-        {this.props.content}
-      </header>
-    );
-  }
-}
-
-class Navigation extends Component {
-  render() {
-    return (
-      <nav>
-        <ul>
-          <li>
-            <a href='1.html'>HTML</a>
-          </li>
-          <li>
-            <a href='2.html'>CSS</a>
-          </li>
-          <li>
-            <a href='3.html'>JavaScript</a>
-          </li>
-        </ul>
-      </nav>
-    );
-  }
-}
-
-class Article extends Component {
-  render() {
-    return (
-      <article>
-        <h2>{this.props.title}</h2>
-        {this.props.desc}
-      </article>
     );
   }
 }
