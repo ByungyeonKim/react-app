@@ -17,6 +17,11 @@ class App extends Component {
         sub: 'properties',
         content: '구글검색해보니 맞는 것 같다.',
       },
+      contents: [
+        { id: 1, title: 'HTML', desc: 'HTML is for information' },
+        { id: 2, title: 'CSS', desc: 'CSS is for design' },
+        { id: 3, title: 'JavaScript', desc: 'JavaScript is for interactive' },
+      ],
     };
   }
   render() {
@@ -27,7 +32,7 @@ class App extends Component {
           sub={this.state.subject.sub}
           content={this.state.subject.content}
         ></Subject>
-        <Navigation></Navigation>
+        <Navigation data={this.state.contents}></Navigation>
         <Article
           title='HTML(props)'
           desc='HTML is HyperText Markup Language.'
