@@ -9,18 +9,23 @@ import './App.css';
 //상속받은 class는 render()라는 함수를 갖고있다.
 //이 코드는 페이스북에서 만든 jsx라는 코드이다.
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      subject: {
+        title: 'props는 아마 프로퍼티스가 아닐까? 🤔',
+        sub: 'properties',
+        content: '구글검색해보니 맞는 것 같다.',
+      },
+    };
+  }
   render() {
     return (
       <div className='App'>
         <Subject
-          title='이게 props의 title'
-          sub='이게 props의 sub'
-          content='jsx의 props는 html의 attribute와 같다'
-        ></Subject>
-        <Subject
-          title='React'
-          sub='효율성의 끝판왕'
-          content='이것이 리액트인가..👨‍💻'
+          title={this.state.subject.title}
+          sub={this.state.subject.sub}
+          content={this.state.subject.content}
         ></Subject>
         <Navigation></Navigation>
         <Article
