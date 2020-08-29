@@ -10,7 +10,9 @@ class Subject extends Component {
         {/* <h1>Web</h1>
           world wide web! */}
         {/* 리팩토링! */}
-        <h1>{this.props.title}</h1>
+        <h1>
+          <a href='/'>{this.props.title}</a>
+        </h1>
         <h2>{this.props.sub}</h2>
         {this.props.content}
       </header>

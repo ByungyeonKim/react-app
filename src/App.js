@@ -12,6 +12,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      mode: 'read',
+      welcome: { title: '환영합니다', desc: '안녕, 리액트!' },
       subject: {
         title: 'props는 아마 프로퍼티스가 아닐까? 🤔',
         sub: 'properties',
@@ -25,6 +27,15 @@ class App extends Component {
     };
   }
   render() {
+    let _title,
+      _desc = null;
+    if (this.state.mode === 'welcome') {
+      _title = this.state.welcome.title;
+      _desc = this.state.welcome.desc;
+    } else if (this.state.mode === 'read') {
+      _title = this.state.contents[1].title;
+      _desc = this.state.contents[1].desc;
+    }
     return (
       <div className='App'>
         <Subject
@@ -33,10 +44,7 @@ class App extends Component {
           content={this.state.subject.content}
         ></Subject>
         <Navigation data={this.state.contents}></Navigation>
-        <Article
-          title='HTML(props)'
-          desc='HTML is HyperText Markup Language.'
-        ></Article>
+        <Article title={_title} desc={_desc}></Article>
       </div>
     );
   }
