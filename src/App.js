@@ -13,11 +13,12 @@ class App extends Component {
     super(props);
     this.state = {
       mode: 'read',
+      selected_content_id: 1,
       welcome: { title: '환영합니다', desc: '안녕, 리액트!' },
       subject: {
-        title: 'props는 아마 프로퍼티스가 아닐까? 🤔',
-        sub: 'properties',
-        content: '구글검색해보니 맞는 것 같다.',
+        title: 'React WEB 🤔',
+        sub: 'React',
+        content: '리액트로 다양한 컴포넌트 이벤트 만들기',
       },
       contents: [
         { id: 1, title: 'HTML', desc: 'HTML is for information' },
@@ -33,8 +34,16 @@ class App extends Component {
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
     } else if (this.state.mode === 'read') {
-      _title = this.state.contents[1].title;
-      _desc = this.state.contents[1].desc;
+      let i = 0;
+      while (i < this.state.contents.length) {
+        let data = this.state.contents[i];
+        if (data.id === this.state.selected_content_id) {
+          _title = data.title;
+          _desc = data.desc;
+          break;
+        }
+        i = i + 1;
+      }
     }
     return (
       <div className='App'>
@@ -46,7 +55,12 @@ class App extends Component {
             this.setState({ mode: 'welcome' });
           }.bind(this)}
         ></Subject>
-        <Navigation data={this.state.contents}></Navigation>
+        <Navigation
+          data={this.state.contents}
+          onChangePage={function (id) {
+            this.setState({ mode: 'read', selected_content_id: Number(id) });
+          }.bind(this)}
+        ></Navigation>
         <Article title={_title} desc={_desc}></Article>
       </div>
     );
