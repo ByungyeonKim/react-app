@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Navigation extends Component {
+class TOC extends Component {
   render() {
     let lists = [];
     let data = this.props.data;
@@ -30,4 +30,4 @@ class Navigation extends Component {
   }
 }
 
-export default Navigation;
+export default TOC;
