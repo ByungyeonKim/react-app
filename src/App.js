@@ -62,13 +62,24 @@ class App extends Component {
             //   title: _title,
             //   desc: _desc,
             // });
-            let _contents = this.state.contents.concat({
+
+            // 원본을 바꾸지는 않지만 가변인지 불변인지 여러 검사를 해야한다.
+            // let _contents = this.state.contents.concat({
+            //   id: this.max_content_id,
+            //   title: _title,
+            //   desc: _desc,
+            // });
+
+            // 객체의 경우엔 Object.assign()을 쓴다.
+            // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+            let newContents = Array.from(this.state.contents);
+            newContents.push({
               id: this.max_content_id,
               title: _title,
               desc: _desc,
             });
             this.setState({
-              contents: _contents,
+              contents: newContents,
             });
           }.bind(this)}
         ></CreateContent>
