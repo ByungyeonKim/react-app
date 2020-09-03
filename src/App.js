@@ -7,10 +7,6 @@ import UpdateContent from './components/UpdateContent';
 import Control from './components/Control';
 import './App.css';
 
-//여기서 컴포넌트를 생성한다.
-//App class를 만들고 리액트의 Component class를 상속한다.
-//상속받은 class는 render()라는 함수를 갖고있다.
-//이 코드는 페이스북에서 만든 jsx라는 코드이다.
 class App extends Component {
   constructor(props) {
     super(props);
@@ -122,9 +118,28 @@ class App extends Component {
         ></TOC>
         <Control
           onChangeMode={function (_mode) {
-            this.setState({
-              mode: _mode,
-            });
+            if (_mode === 'delete') {
+              if (window.confirm('삭제하시겠습니까?')) {
+                let _contents = Array.from(this.state.contents);
+                let i = 0;
+                while (i < _contents.length) {
+                  if (_contents[i].id === this.state.selected_content_id) {
+                    _contents.splice(i, 1);
+                    break;
+                  }
+                  i = i + 1;
+                }
+                this.setState({
+                  contents: _contents,
+                  mode: 'welcome',
+                });
+                alert('삭제완료');
+              }
+            } else {
+              this.setState({
+                mode: _mode,
+              });
+            }
           }.bind(this)}
         ></Control>
         {this.getContent()}
