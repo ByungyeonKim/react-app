@@ -3,6 +3,7 @@ import Subject from './components/Subject';
 import TOC from './components/TOC';
 import ReadContent from './components/ReadContent';
 import CreateContent from './components/CreateContent';
+import UpdateContent from './components/UpdateContent';
 import Control from './components/Control';
 import './App.css';
 
@@ -31,7 +32,19 @@ class App extends Component {
       ],
     };
   }
-  render() {
+  getReadContent() {
+    let i = 0;
+    while (i < this.state.contents.length) {
+      let data = this.state.contents[i];
+      if (data.id === this.state.selected_content_id) {
+        return data;
+        break;
+      }
+      i = i + 1;
+    }
+  }
+
+  getContent() {
     let _title,
       _desc,
       _article = null;
@@ -40,36 +53,15 @@ class App extends Component {
       _desc = this.state.welcome.desc;
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
     } else if (this.state.mode === 'read') {
-      let i = 0;
-      while (i < this.state.contents.length) {
-        let data = this.state.contents[i];
-        if (data.id === this.state.selected_content_id) {
-          _title = data.title;
-          _desc = data.desc;
-          break;
-        }
-        i = i + 1;
-      }
-      _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
+      let _content = this.getReadContent();
+      _article = (
+        <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
+      );
     } else if (this.state.mode === 'create') {
       _article = (
         <CreateContent
           onSubmit={function (_title, _desc) {
             this.max_content_id = this.max_content_id + 1;
-            // 기존의 데이터에 추가하는 방식이여서 성능개선이 힘들어진다.
-            // this.state.contents.push({
-            //   id: this.max_content_id,
-            //   title: _title,
-            //   desc: _desc,
-            // });
-
-            // 원본을 바꾸지는 않지만 가변인지 불변인지 여러 검사를 해야한다.
-            // let _contents = this.state.contents.concat({
-            //   id: this.max_content_id,
-            //   title: _title,
-            //   desc: _desc,
-            // });
-
             // 객체의 경우엔 Object.assign()을 쓴다.
             // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
             let newContents = Array.from(this.state.contents);
@@ -80,11 +72,38 @@ class App extends Component {
             });
             this.setState({
               contents: newContents,
+              mode: 'read',
             });
           }.bind(this)}
         ></CreateContent>
       );
+    } else if (this.state.mode === 'update') {
+      let _content = this.getReadContent();
+      _article = (
+        <UpdateContent
+          data={_content}
+          onSubmit={function (_id, _title, _desc) {
+            let _contents = Array.from(this.state.contents);
+            let i = 0;
+            while (i < _contents.length) {
+              if (_contents[i].id === _id) {
+                _contents[i] = { id: _id, title: _title, desc: _desc };
+                break;
+              }
+              i = i + 1;
+            }
+            this.setState({
+              contents: _contents,
+              mode: 'read',
+            });
+          }.bind(this)}
+        ></UpdateContent>
+      );
     }
+    return _article;
+  }
+
+  render() {
     return (
       <div className='App'>
         <Subject
@@ -108,7 +127,7 @@ class App extends Component {
             });
           }.bind(this)}
         ></Control>
-        {_article}
+        {this.getContent()}
       </div>
     );
   }
